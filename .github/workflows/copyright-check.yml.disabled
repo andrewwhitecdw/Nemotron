@@ -44,6 +44,8 @@ jobs:
       )
       && !cancelled()
     runs-on: ubuntu-latest
+    env:
+      SKIPPING_IS_ALLOWED: ${{ vars.SKIPPING_IS_ALLOWED || 'false' }}
     steps:
       - name: Result
         run: |
