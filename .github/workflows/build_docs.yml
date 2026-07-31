@@ -41,6 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      SKIPPING_IS_ALLOWED: ${{ vars.SKIPPING_IS_ALLOWED || 'false' }}
     steps:
       - name: Result
         run: |
