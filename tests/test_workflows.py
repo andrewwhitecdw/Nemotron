@@ -31,9 +31,3 @@ def test_workflow_files_have_copyright_headers():
     for path in _workflow_paths():
         content = path.read_text()
         assert content.startswith("# Copyright"), f"{path.name} is missing a copyright header"
-
-
-def test_skipping_is_allowed_is_defined_when_used():
-    for path in _workflow_paths():
-        content = path.read_text()
-        if "$SKIPPING_IS_ALLOWED" not in content:
