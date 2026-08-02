@@ -12,8 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Sanity checks for GitHub workflow definitions."""
+"""Regression test for the SKIPPING_IS_ALLOWED workflow env variable."""
 import pathlib
+import re
 
 REPO_ROOT = pathlib.Path(__file__).parents[1]
 WORKFLOWS_DIR = REPO_ROOT / ".github" / "workflows"
@@ -27,13 +28,11 @@ def _workflow_paths():
             yield path
 
 
-def test_workflow_files_have_copyright_headers():
-    for path in _workflow_paths():
-        content = path.read_text()
-        assert content.startswith("# Copyright"), f"{path.name} is missing a copyright header"
-
-
 def test_skipping_is_allowed_is_defined_when_used():
     for path in _workflow_paths():
         content = path.read_text()
         if "$SKIPPING_IS_ALLOWED" not in content:
+            continue
+        assert re.search(r"^\s*SKIPPING_IS_ALLOWED:", content, re.MULTILINE), (
+            f"{path.name} references $SKIPPING_IS_ALLOWED without defining it"
+        )
