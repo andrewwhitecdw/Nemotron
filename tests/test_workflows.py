@@ -37,3 +37,7 @@ def test_skipping_is_allowed_is_defined_when_used():
     for path in _workflow_paths():
         content = path.read_text()
         if "$SKIPPING_IS_ALLOWED" not in content:
+            continue
+        assert "SKIPPING_IS_ALLOWED:" in content, (
+            f"{path.name} uses $SKIPPING_IS_ALLOWED without defining it in env"
+        )
